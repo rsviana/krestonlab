@@ -53,6 +53,7 @@ def dashboard():
     table.add_column("Container")
     table.add_column("Status")
 
+    
     statuses = list_all_status()
 
     if not statuses:
@@ -62,8 +63,10 @@ def dashboard():
             table.add_row(name, status)
 
         console.print(table)
-
+        print("⚠️ Aqui estarão listados o estados de TODOS os containers que você possuí.")
     pause()
+    
+    
 
 
 def start_menu():
@@ -112,12 +115,11 @@ def start_menu():
             remove_container(lab)
             pause()
 
-        
         elif choice == "❌ Sair":
             console.print("[bold green]" \
-            "Até mais, \n" 
+            "Até mais, " \
             "Acesse: http://rodrigoviana.dev.br [/bold green]" \
-            "\n" 
-            "\n" 
+            "" \
+            "" \
             "")
             break
