@@ -11,8 +11,11 @@ console = Console()
 
 def banner():
     console.print(Panel.fit(
-        "[bold red]KRESTONLAB[/bold red]\n"
-        "[bold]Offensive Security Local Lab Manager[/bold]",
+        "[bold red]KRESTONLAB - v.1[/bold red]\n" \
+        "\n"
+        "[bold]Offensive Security Local Lab Manager[/bold]" \
+        "\n" 
+        "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação",
         border_style="red"
     ))
 
@@ -109,6 +112,12 @@ def start_menu():
             remove_container(lab)
             pause()
 
+        
         elif choice == "❌ Sair":
-            console.print("[bold green]Até mais, Krest0n.[/bold green]")
+            console.print("[bold green]" \
+            "Até mais, \n" 
+            "Acesse: http://rodrigoviana.dev.br [/bold green]" \
+            "\n" 
+            "\n" 
+            "")
             break
