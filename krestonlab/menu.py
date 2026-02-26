@@ -12,7 +12,7 @@ console = Console()
 def banner():
     console.print(Panel.fit(
         "\n"
-        "[bold red]KRESTONLAB - v.1[/bold red]\n" \
+        "[bold red]KRESTONLAB - v1.0.0[/bold red]\n" \
         "\n"
         "[bold]Offensive Security Local Lab Manager[/bold]" \
         "\n" 
