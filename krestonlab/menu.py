@@ -11,11 +11,15 @@ console = Console()
 
 def banner():
     console.print(Panel.fit(
+        "\n"
         "[bold red]KRESTONLAB - v.1[/bold red]\n" \
         "\n"
         "[bold]Offensive Security Local Lab Manager[/bold]" \
         "\n" 
-        "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação",
+        "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação"
+        "\n"
+        ,
+        
         border_style="red"
     ))
 
@@ -40,9 +44,12 @@ def main_menu():
             "🚀 Subir Lab",
             "⏹ Parar Lab",
             "🗑 Remover Lab",
-            "❌ Sair"
+            "❌ Sair",
+
+
         ]
     ).ask()
+
 
 
 def dashboard():
