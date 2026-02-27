@@ -1,132 +1,57 @@
-import questionary
+from InquirerPy import inquirer
 from rich.console import Console
-from rich.panel import Panel
-from rich.table import Table
-from rich import print
 from krestonlab.labs import LABS
 from krestonlab.docker_manager import *
 
 console = Console()
 
 
-def banner():
-    console.print(Panel.fit(
-        "\n"
-        "[bold red]KRESTONLAB - v1.0.0[/bold red]\n" \
-        "\n"
-        "[bold]Offensive Security Local Lab Manager[/bold]" \
-        "\n" 
-        "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação"
-        "\n"
-        ,
-        
-        border_style="red"
-    ))
-
-
-def pause():
-    input("\nPressione Enter para continuar...")
-
-
-def lab_selector():
-    return questionary.select(
-        "Escolha o laboratório:",
-        choices=list(LABS.keys()) + ["⬅ Voltar"]
-    ).ask()
-
-
-def main_menu():
-    return questionary.select(
-        "Selecione uma opção:",
-        choices=[
-            "📊 Dashboard",
-            "📦 Instalar Lab",
-            "🚀 Subir Lab",
-            "⏹ Parar Lab",
-            "🗑 Remover Lab",
-            "❌ Sair",
-
-
-        ]
-    ).ask()
-
-
-
-def dashboard():
-    console.clear()
-    banner()
-
-    table = Table(title="Status dos Containers")
-    table.add_column("Container")
-    table.add_column("Status")
-
-    
-    statuses = list_all_status()
-
-    if not statuses:
-        console.print("[yellow]Nenhum container encontrado.[/yellow]")
-    else:
-        for name, status in statuses.items():
-            table.add_row(name, status)
-
-        console.print(table)
-        print("⚠️ Aqui estarão listados o estados de TODOS os containers que você possuí.")
-    pause()
-    
-    
+def choose_lab():
+    return inquirer.select(
+        message="Escolha o laboratório:",
+        choices=list(LABS.keys())
+    ).execute()
 
 
 def start_menu():
-    check_docker()
-
     while True:
-        console.clear()
-        banner()
+        option = inquirer.select(
+            message="Selecione uma opção:",
+            choices=[
+                "🚀 Subir Lab",
+                "⬇️ Instalar Lab",
+                "⛔ Parar Lab",
+                "🗑️ Remover Lab",
+                "📊 Status",
+                "❌ Sair"
+            ],
+        ).execute()
 
-        choice = main_menu()
+        if option == "❌ Sair":
+            break
 
-        if choice == "📊 Dashboard":
-            dashboard()
+        lab = choose_lab()
+        data = LABS[lab]
 
-        elif choice == "📦 Instalar Lab":
-            lab = lab_selector()
-            if lab == "⬅ Voltar":
-                continue
-            pull_image(LABS[lab]["image"])
-            pause()
+        if option == "⬇️ Instalar Lab":
+            check_docker()
+            pull_image(data["image"])
 
-        elif choice == "🚀 Subir Lab":
-            lab = lab_selector()
-            if lab == "⬅ Voltar":
-                continue
-            data = LABS[lab]
+        elif option == "🚀 Subir Lab":
+            check_docker()
             run_container(
                 lab,
                 data["image"],
                 data["default_port"],
                 data["internal_port"]
             )
-            pause()
 
-        elif choice == "⏹ Parar Lab":
-            lab = lab_selector()
-            if lab == "⬅ Voltar":
-                continue
+        elif option == "⛔ Parar Lab":
             stop_container(lab)
-            pause()
 
-        elif choice == "🗑 Remover Lab":
-            lab = lab_selector()
-            if lab == "⬅ Voltar":
-                continue
+        elif option == "🗑️ Remover Lab":
             remove_container(lab)
-            pause()
 
-        elif choice == "❌ Sair":
-            console.print("[bold green]" \
-            "Até mais, " \
-            "Acesse: http://rodrigoviana.dev.br [/bold green]" \
-            "" \
-            "" \
-            "")
-            break
+        elif option == "📊 Status":
+            status = container_status(lab)
+            console.print(f"[blue]Status:[/blue] {status}")

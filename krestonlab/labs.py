@@ -6,10 +6,10 @@ LABS = {
         "description": "Damn Vulnerable Web Application"
     },
     "Mutillidae": {
-        "image": "szsecurity/mutillidae",
-        "internal_port": 80,
+        "description": "OWASP Mutillidae II",
+        "image": "citizenstig/nowasp",
         "default_port": 8081,
-        "description": "OWASP Mutillidae II"
+        "internal_port": 80
     },
     "WebGoat": {
         "image": "szsecurity/webgoat",
