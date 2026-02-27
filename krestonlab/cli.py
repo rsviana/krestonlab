@@ -62,4 +62,5 @@ def status(lab: str):
     console.print(f"[blue]Status:[/blue] {state}")
 
 def run():
+    
     app()
