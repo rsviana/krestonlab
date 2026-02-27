@@ -36,6 +36,8 @@ Ferramenta interativa para gerenciamento de laboratórios vulneráveis via Docke
 
 ## 📥 Instalação
 
+> ⚠️ Recomendo que instale em um ambiente virtual, não há muitos pacotes a serem instalados, mas com isso seu projeto fica mais profissional.
+
 ```bash
 git clone https://github.com/rsviana/krestonlab.git
 cd krestonlab
