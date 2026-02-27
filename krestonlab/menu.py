@@ -1,57 +1,175 @@
-from InquirerPy import inquirer
+import questionary
 from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from rich import print
+
 from krestonlab.labs import LABS
-from krestonlab.docker_manager import *
+from krestonlab.docker_manager import (
+    check_docker,
+    pull_image,
+    run_container,
+    stop_container,
+    remove_container,
+    container_status
+)
 
 console = Console()
 
 
-def choose_lab():
-    return inquirer.select(
-        message="Escolha o laboratório:",
-        choices=list(LABS.keys())
-    ).execute()
+# -------------------------------------------------
+# UI
+# -------------------------------------------------
 
+def banner():
+    console.print(
+        Panel.fit(
+            "[bold red]KRESTONLAB - v.1[/bold red]\n\n"
+            "[bold]Offensive Security Local Lab Manager[/bold]\n"
+            "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação.",
+            border_style="red"
+        )
+    )
+
+
+def pause():
+    input("\nPressione Enter para continuar...")
+
+
+def lab_selector():
+    return questionary.select(
+        "Escolha o laboratório:",
+        choices=list(LABS.keys()) + ["⬅ Voltar"]
+    ).ask()
+
+
+def main_menu():
+    return questionary.select(
+        "Selecione uma opção:",
+        choices=[
+            "📊 Dashboard",
+            "📊 Status",
+            "📦 Instalar Lab",
+            "🚀 Subir Lab",
+            "⏹ Parar Lab",
+            "🗑 Remover Lab",
+            "❌ Sair"
+        ]
+    ).ask()
+
+
+# -------------------------------------------------
+# DASHBOARD (GERAL)
+# -------------------------------------------------
+
+def list_all_status():
+    statuses = {}
+    for lab in LABS.keys():
+        statuses[lab] = container_status(lab)
+    return statuses
+
+
+def dashboard():
+    console.clear()
+    banner()
+
+    table = Table(title="Status Geral dos Containers")
+    table.add_column("Container", style="cyan")
+    table.add_column("Status", style="green")
+
+    statuses = list_all_status()
+
+    active = False
+    for name, status in statuses.items():
+        if status != "Container não existe":
+            active = True
+            table.add_row(name, status)
+
+    if not active:
+        console.print("[yellow]Nenhum container encontrado.[/yellow]")
+    else:
+        console.print(table)
+
+    pause()
+
+
+# -------------------------------------------------
+# STATUS INDIVIDUAL
+# -------------------------------------------------
+
+def show_status():
+    lab = lab_selector()
+    if lab == "⬅ Voltar":
+        return
+
+    status = container_status(lab)
+
+    console.print(
+        Panel.fit(
+            f"[bold cyan]{lab}[/bold cyan]\n\nStatus: [bold green]{status}[/bold green]",
+            border_style="cyan"
+        )
+    )
+
+    pause()
+
+
+# -------------------------------------------------
+# LOOP PRINCIPAL
+# -------------------------------------------------
 
 def start_menu():
+    check_docker()
+
     while True:
-        option = inquirer.select(
-            message="Selecione uma opção:",
-            choices=[
-                "🚀 Subir Lab",
-                "⬇️ Instalar Lab",
-                "⛔ Parar Lab",
-                "🗑️ Remover Lab",
-                "📊 Status",
-                "❌ Sair"
-            ],
-        ).execute()
+        console.clear()
+        banner()
 
-        if option == "❌ Sair":
-            break
+        choice = main_menu()
 
-        lab = choose_lab()
-        data = LABS[lab]
+        if choice == "📊 Dashboard":
+            dashboard()
 
-        if option == "⬇️ Instalar Lab":
-            check_docker()
-            pull_image(data["image"])
+        elif choice == "📊 Status":
+            show_status()
 
-        elif option == "🚀 Subir Lab":
-            check_docker()
+        elif choice == "📦 Instalar Lab":
+            lab = lab_selector()
+            if lab == "⬅ Voltar":
+                continue
+            pull_image(LABS[lab]["image"])
+            pause()
+
+        elif choice == "🚀 Subir Lab":
+            lab = lab_selector()
+            if lab == "⬅ Voltar":
+                continue
+            data = LABS[lab]
             run_container(
                 lab,
                 data["image"],
                 data["default_port"],
                 data["internal_port"]
             )
+            pause()
 
-        elif option == "⛔ Parar Lab":
+        elif choice == "⏹ Parar Lab":
+            lab = lab_selector()
+            if lab == "⬅ Voltar":
+                continue
             stop_container(lab)
+            pause()
 
-        elif option == "🗑️ Remover Lab":
+        elif choice == "🗑 Remover Lab":
+            lab = lab_selector()
+            if lab == "⬅ Voltar":
+                continue
             remove_container(lab)
+            pause()
 
-        elif option == "📊 Status":
-            status = container_status(lab)
-            console.print(f"[blue]Status:[/blue] {status}")
+        elif choice == "❌ Sair":
+            console.print(
+                "\n[bold green]Até mais!\n"
+                "Acesse: http://rodrigoviana.dev.br\n[/bold green]"
+            )
+            break

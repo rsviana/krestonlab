@@ -2,7 +2,7 @@ LABS = {
     "DVWA": {
         "image": "vulnerables/web-dvwa",
         "internal_port": 80,
-        "default_port": 8080,
+        "default_port": 8089,
         "description": "Damn Vulnerable Web Application"
     },
     "Mutillidae": {
