@@ -17,10 +17,6 @@ from krestonlab.docker_manager import (
 console = Console()
 
 
-# -------------------------------------------------
-# UI
-# -------------------------------------------------
-
 def banner():
     console.print(
         Panel.fit(
@@ -59,8 +55,7 @@ def main_menu():
 
 
 # -------------------------------------------------
-# DASHBOARD (GERAL)
-# -------------------------------------------------
+
 
 def list_all_status():
     statuses = {}
@@ -93,10 +88,6 @@ def dashboard():
     pause()
 
 
-# -------------------------------------------------
-# STATUS INDIVIDUAL
-# -------------------------------------------------
-
 def show_status():
     lab = lab_selector()
     if lab == "⬅ Voltar":
@@ -112,11 +103,6 @@ def show_status():
     )
 
     pause()
-
-
-# -------------------------------------------------
-# LOOP PRINCIPAL
-# -------------------------------------------------
 
 def start_menu():
     check_docker()
