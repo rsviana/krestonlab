@@ -65,6 +65,7 @@ def stop_container(name: str):
 
 
 def remove_container(name: str):
+    #print("[yellow]Lab removido.[/yellow]")
     run_command(["docker", "rm", "-f", name])
     console.print("[yellow]Lab removido.[/yellow]")
 
