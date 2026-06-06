@@ -21,8 +21,8 @@ def banner():
     console.print(
         Panel.fit(
             "[bold red]KRESTONLAB - v.2 ☠️ More Machines ☠️[/bold red]\n\n"
-            "[bold]Offensive Security Local Lab Manager[/bold]\n"
-            "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação.",
+            "[bold]Offensive Security Local Lab Manager [/bold]\n"
+            "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação. ",
             border_style="red"
         )
     )
