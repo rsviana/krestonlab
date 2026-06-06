@@ -77,6 +77,15 @@ LABS = {
     "description": "OWASP NodeGoat",
     "env": {},
     "volumes": []
+}, 
+
+"DVGA": {
+    "image": "dolevf/dvga",
+    "internal_port": 5013,
+    "default_port": 8086,
+    "description": "Damn Vulnerable GraphQL Application",
+    "env": {},
+    "volumes": []
 }
     
 }
