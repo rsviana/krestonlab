@@ -1,12 +1,11 @@
 # 🔥 KrestonLab
-
 ### Version 2.0 - June 6, 2026
+
+![KrestonLab Main Menu](docs/images/main-menu.png)
 
 **Offensive Security Local Lab Manager**
 
 KrestonLab is an interactive tool designed to simplify the deployment and management of vulnerable applications for penetration testing, web security training, and hands-on cybersecurity practice using Docker.
-
----
 
 ## 🚀 Features
 
