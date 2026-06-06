@@ -1,7 +1,7 @@
 # 🔥 KrestonLab
 ### Version 2.0 - June 6, 2026
 
-![KrestonLab Main Menu](docs/images/main-menu.png)
+![KrestonLab Main Menu](krestonlab/docs/images/main-menu.png)
 
 **Offensive Security Local Lab Manager**
 
