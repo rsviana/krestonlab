@@ -20,7 +20,7 @@ console = Console()
 def banner():
     console.print(
         Panel.fit(
-            "[bold red]KRESTONLAB - v.1[/bold red]\n\n"
+            "[bold red]KRESTONLAB - v.1.1[/bold red]\n\n"
             "[bold]Offensive Security Local Lab Manager[/bold]\n"
             "KrestonLab é um laboratório para CyberSecurity. Use-o sem moderação.",
             border_style="red"
