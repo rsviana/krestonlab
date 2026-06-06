@@ -42,6 +42,42 @@ LABS = {
         "description": "OWASP Juice Shop",
         "env": {},
         "volumes": []
-    }
+    },
+"XVWA": {
+    "image": "teejaymehta/xvwa",
+    "internal_port": 80,
+    "default_port": 8087,
+    "description": "Xtreme Vulnerable Web Application",
+    "env": {},
+    "volumes": []
+},
+
+"AltoroMutual": {
+    "image": "eystsen/altoro-mutual",
+    "internal_port": 8080,
+    "default_port": 8088,
+    "description": "Altoro Mutual Banking Application",
+    "env": {},
+    "volumes": []
+},
+
+"Hackazon": {
+    "image": "mutzel/all-in-one-hackazon",
+    "internal_port": 80,
+    "default_port": 8090,
+    "description": "Hackazon Vulnerable E-Commerce",
+    "env": {},
+    "volumes": []
+},
+
+"NodeGoat": {
+    "image": "owasp/nodegoat",
+    "internal_port": 4000,
+    "default_port": 8085,
+    "description": "OWASP NodeGoat",
+    "env": {},
+    "volumes": []
+}
+    
 }
 # krestonlab - http://rodrigoviana.dev.br
