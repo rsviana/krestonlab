@@ -39,25 +39,44 @@ def pull_image(image: str):
     console.print("[green]Imagem pronta![/green]")
 
 
-def run_container(name: str, image: str, host_port: int, internal_port: int):
+def run_container(
+        name: str,
+        image: str,
+        host_port: int,
+        internal_port: int,
+        env: dict = None,
+        volumes: list = None
+):
     console.print(f"[cyan]Subindo lab {name}...[/cyan]")
 
-    # remove se existir
+    env = env or {}
+    volumes = volumes or []
+
     subprocess.run(
         ["docker", "rm", "-f", name],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
     )
 
-    run_command([
-        "docker", "run", "-d",
-        "--name", name,
-        "-p", f"{host_port}:{internal_port}",
-        image
-    ])
+    cmd = [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        name,
+        "-p",
+        f"{host_port}:{internal_port}"
+    ]
+    for key, value in env.items():
+        cmd.extend(["-e", f"{key}={value}"])
 
-    console.print(f"[green]Rodando em http://localhost:{host_port}[/green]")
-
+    for volume in volumes:
+        cmd.extend(["-v", volume])
+    cmd.append(image)
+    run_command(cmd)
+    console.print(
+        f"[green]Rodando em http://localhost:{host_port}[/green]"
+    )
 
 def stop_container(name: str):
     run_command(["docker", "stop", name])

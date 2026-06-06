@@ -70,6 +70,7 @@ def dashboard():
 
     table = Table(title="Status Geral dos Containers")
     table.add_column("Container", style="cyan")
+    table.add_column("Porta", style="yellow")
     table.add_column("Status", style="green")
 
     statuses = list_all_status()
@@ -78,7 +79,11 @@ def dashboard():
     for name, status in statuses.items():
         if status != "Container não existe":
             active = True
-            table.add_row(name, status)
+            table.add_row(
+            name,
+            str(LABS[name]["default_port"]),
+            status
+        )
 
     if not active:
         console.print("[yellow]Nenhum container encontrado.[/yellow]")
@@ -135,7 +140,9 @@ def start_menu():
                 lab,
                 data["image"],
                 data["default_port"],
-                data["internal_port"]
+                data["internal_port"],
+                data.get("env", {}),
+                data.get("volumes", [])
             )
             pause()
 

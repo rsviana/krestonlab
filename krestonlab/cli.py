@@ -25,7 +25,9 @@ def start(lab: str):
         lab,
         data["image"],
         data["default_port"],
-        data["internal_port"]
+        data["internal_port"],
+        data.get("env", {}),
+        data.get("volumes", [])
     )
 
 
